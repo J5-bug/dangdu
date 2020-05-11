@@ -1,32 +1,45 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
+    <transition
+      mode="out-in"
+      :duration="{ enter: 300, leave: 200 }"
+      enter-active-class="animated fadeIn"
+      leave-active-class="animated fadeOut"
+    >
+      <router-view></router-view>
+    </transition>
+    
+    <!-- 脚 -->
+    <van-tabbar v-model="active" v-show="$store.state.vanTabbar">
+      <van-tabbar-item to="/home" icon="wap-home-o">首页</van-tabbar-item>
+      <van-tabbar-item to="/sort" icon="search">分类</van-tabbar-item>
+      <van-tabbar-item to="/read" icon="description">当读</van-tabbar-item>
+      <van-tabbar-item to="/buy" icon="shopping-cart-o">购物车</van-tabbar-item>
+      <van-tabbar-item to="/mydang" icon="contact">我的</van-tabbar-item>
+    </van-tabbar>
+    <!-- 用于撑开底部位置 -->
+    <div class="bottomnull"></div>
   </div>
 </template>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
+<script>
+export default {
+  data() {
+    return {
+      active: 0
+    };
   }
+};
+</script>
+
+<style lang="scss" scoped>
+// 解决滚动条效果
+#app {
+  overflow: hidden;
+}
+// 留有底部位置
+.bottomnull {
+  height: 50px;
+  width: 100%;
 }
 </style>
